@@ -1,7 +1,9 @@
 package com.example.datastorage.Controladores
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -28,6 +30,17 @@ class UsersListActivity : AppCompatActivity()
         listView.setClickable(true)
         listView.setOnItemClickListener { adapterView, view, i, l ->
             Toast.makeText(this, "Item Clicked " + adapter.getName(i),Toast.LENGTH_SHORT).show()
+
+            val profileIntent = Intent(this, ProfileActivity::class.java)
+            var userToShow = listPosts?.get(adapter.getItemId(i).toInt())
+
+            if (userToShow != null) {
+                profileIntent.putExtra(ProfileActivity.USER_NAME_SHOW, userToShow.name)
+                profileIntent.putExtra(ProfileActivity.USER_EMAIL_SHOW, userToShow.email)
+                profileIntent.putExtra(ProfileActivity.USER_AGE_SHOW, userToShow.age)
+            }
+            startActivity(profileIntent)
+            finish()
         }
     }
 }
